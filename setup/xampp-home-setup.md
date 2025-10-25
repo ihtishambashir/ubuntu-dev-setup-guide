@@ -6,25 +6,25 @@ Move XAMPP’s web root from `/opt/lampp/htdocs` to a directory in your **home**
 
 ```bash
 # 1) make sure the path exists
-mkdir -p /home/ihtisham/Projects/php
+mkdir -p /home/<USER>/Projects/php
 
 # 2) put a test file
-echo "<?php echo 'OK from '.__FILE__; phpinfo(); ?>" > /home/ihtisham/Projects/php/index.php
+echo "<?php echo 'OK from '.__FILE__; phpinfo(); ?>" > /home/<USER>/Projects/php/index.php
 
 # 3) ownership (you own your project)
-sudo chown -R ihtisham:ihtisham /home/ihtisham/Projects/php
+sudo chown -R <USER>:<USER> /home/<USER>/Projects/php
 
 # 4) directory perms (execute bit needed to traverse)
-chmod 711 /home/ihtisham
-chmod 755 /home/ihtisham/Projects
-chmod 755 /home/ihtisham/Projects/php
+chmod 711 /home/<USER>
+chmod 755 /home/<USER>/Projects
+chmod 755 /home/<USER>/Projects/php
 
 # 5) file perms (typical web-safe)
-find /home/ihtisham/Projects/php -type d -exec chmod 755 {{}} \;
-find /home/ihtisham/Projects/php -type f -exec chmod 644 {{}} \;
+find /home/<USER>/Projects/php -type d -exec chmod 755 {{}} \;
+find /home/<USER>/Projects/php -type f -exec chmod 644 {{}} \;
 ```
 
-> If you don’t want to open your home dir with `711`, use an ACL on `/home/ihtisham` to grant Apache read/execute instead.
+> If you don’t want to open your home dir with `711`, use an ACL on `/home/<USER>` to grant Apache read/execute instead.
 
 ## 2) Point Apache to this exact path
 
@@ -37,9 +37,9 @@ sudo nano /opt/lampp/etc/httpd.conf
 Change both **DocumentRoot** and the matching **Directory** block to your path:
 
 ```apache
-DocumentRoot "/home/ihtisham/Projects/php"
+DocumentRoot "/home/<USER>/Projects/php"
 
-<Directory "/home/ihtisham/Projects/php">
+<Directory "/home/<USER>/Projects/php">
     Options Indexes FollowSymLinks
     AllowOverride All
     Require all granted
